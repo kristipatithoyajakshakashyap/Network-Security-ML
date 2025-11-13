@@ -2,6 +2,7 @@ setuptools
 python-dotenv
 pandas
 numpy
+pymongo[srv]
 pymongo
 certifi
 
