@@ -1,10 +1,12 @@
 from networksecurity.components.data_ingestion import DataIngestion
 from networksecurity.components.data_validation import DataValidation
 from networksecurity.components.data_transformation import DataTransformation
+from networksecurity.components.model_trainer import ModelTrainer
 from networksecurity.exception.exception import NetworkSecurityException
 from networksecurity.logging.logger import logging
-from networksecurity.entity.config_entity import DataIngestionConfig,DataValidationConfig,DataTransformationConfig
+from networksecurity.entity.config_entity import DataIngestionConfig,DataValidationConfig,DataTransformationConfig,ModelTrainerConfig
 from networksecurity.entity.config_entity import TrainingPipelineConfig
+
 import sys
 
 if __name__=="__main__":
@@ -29,6 +31,11 @@ if __name__=="__main__":
         datatransformationartifact=datatransformation.initiate_data_transformation()
         print(f"Data Transformation Artifact {datatransformationartifact}")
         logging.info("Data transformation completed")
+        modeltrainerconfig=ModelTrainerConfig(training_pipeline_config=trainingpipelineconfig)
+        modeltrainer=ModelTrainer(model_train_config=modeltrainerconfig,data_transformation_artifact=datatransformationartifact)
+        logging.info("Model Training Started")
+        modeltrainerartifact=modeltrainer.initiate_model_trainer()
+        logging.info("Model Trainer Artifact Created")
     except Exception as e:
         raise NetworkSecurityException(e,sys)
 
