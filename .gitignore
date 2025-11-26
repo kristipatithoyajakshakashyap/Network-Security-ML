@@ -2,3 +2,7 @@ venv/
 .env
 logs/
 __pycache__/
+Artifacts/
+logs/
+mlruns/
+final_model/
