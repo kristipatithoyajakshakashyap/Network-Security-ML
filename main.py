@@ -6,36 +6,38 @@ from networksecurity.exception.exception import NetworkSecurityException
 from networksecurity.logging.logger import logging
 from networksecurity.entity.config_entity import DataIngestionConfig,DataValidationConfig,DataTransformationConfig,ModelTrainerConfig
 from networksecurity.entity.config_entity import TrainingPipelineConfig
-
+from networksecurity.pipeline.training_pipeline import TrainingPipeline
 import sys
 
 if __name__=="__main__":
     sys.dont_write_bytecode=True
     try:
-        trainingpipelineconfig=TrainingPipelineConfig()
-        dataingestionconfig=DataIngestionConfig(training_pipeline_config=trainingpipelineconfig)
-        dataingestion=DataIngestion(data_ingestion_config=dataingestionconfig)
-        logging.info("Initiate the data ingestion")
-        dataingestionartifact=dataingestion.initiate_data_ingestion()
-        print(f"Data Ingestion Artifact {dataingestionartifact}")
-        logging.info("Data Inititation Completed")
-        datavalidationconfig=DataValidationConfig(training_pipeline_config=trainingpipelineconfig)
-        datavalidation=DataValidation(data_ingestion_artifact=dataingestionartifact,data_validation_config=datavalidationconfig)
-        logging.info("Initate the data validation")
-        datavalidationartifact=datavalidation.initiate_data_validation()
-        logging.info("Data Validation Completed")
-        print(f"Data Validation Artifact {datavalidationartifact}")
-        datatransformationconfig=DataTransformationConfig(training_pipeline_config=trainingpipelineconfig)
-        datatransformation=DataTransformation(data_validation_artifact=datavalidationartifact,data_transformation_config=datatransformationconfig)
-        logging.info("Data transformation started")
-        datatransformationartifact=datatransformation.initiate_data_transformation()
-        print(f"Data Transformation Artifact {datatransformationartifact}")
-        logging.info("Data transformation completed")
-        modeltrainerconfig=ModelTrainerConfig(training_pipeline_config=trainingpipelineconfig)
-        modeltrainer=ModelTrainer(model_train_config=modeltrainerconfig,data_transformation_artifact=datatransformationartifact)
-        logging.info("Model Training Started")
-        modeltrainerartifact=modeltrainer.initiate_model_trainer()
-        logging.info("Model Trainer Artifact Created")
+        # trainingpipelineconfig=TrainingPipelineConfig()
+        # dataingestionconfig=DataIngestionConfig(training_pipeline_config=trainingpipelineconfig)
+        # dataingestion=DataIngestion(data_ingestion_config=dataingestionconfig)
+        # logging.info("Initiate the data ingestion")
+        # dataingestionartifact=dataingestion.initiate_data_ingestion()
+        # print(f"Data Ingestion Artifact {dataingestionartifact}")
+        # logging.info("Data Inititation Completed")
+        # datavalidationconfig=DataValidationConfig(training_pipeline_config=trainingpipelineconfig)
+        # datavalidation=DataValidation(data_ingestion_artifact=dataingestionartifact,data_validation_config=datavalidationconfig)
+        # logging.info("Initate the data validation")
+        # datavalidationartifact=datavalidation.initiate_data_validation()
+        # logging.info("Data Validation Completed")
+        # print(f"Data Validation Artifact {datavalidationartifact}")
+        # datatransformationconfig=DataTransformationConfig(training_pipeline_config=trainingpipelineconfig)
+        # datatransformation=DataTransformation(data_validation_artifact=datavalidationartifact,data_transformation_config=datatransformationconfig)
+        # logging.info("Data transformation started")
+        # datatransformationartifact=datatransformation.initiate_data_transformation()
+        # print(f"Data Transformation Artifact {datatransformationartifact}")
+        # logging.info("Data transformation completed")
+        # modeltrainerconfig=ModelTrainerConfig(training_pipeline_config=trainingpipelineconfig)
+        # modeltrainer=ModelTrainer(model_train_config=modeltrainerconfig,data_transformation_artifact=datatransformationartifact)
+        # logging.info("Model Training Started")
+        # modeltrainerartifact=modeltrainer.initiate_model_trainer()
+        # logging.info("Model Trainer Artifact Created")
+        train_pipeline=TrainingPipeline()
+        train_pipeline.run_pipeline()
     except Exception as e:
         raise NetworkSecurityException(e,sys)
 
